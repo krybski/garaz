@@ -20,7 +20,7 @@
 #include <SPI.h>
 #include <Ethernet.h>
 
-#define wlacznik 5
+#define wlacznik 2
 #define swiatlo_1 6
 #define swiatlo_2 7
 
@@ -42,7 +42,7 @@ void setup() {
   pinMode(swiatlo_2, OUTPUT);
   digitalWrite(swiatlo_2, LOW);
   digitalWrite(swiatlo_1, LOW);
-  
+
   // start the Ethernet connection and the server:
   Ethernet.begin(mac, ip);
 
@@ -75,7 +75,7 @@ void loop() {
           digitalWrite(swiatlo_2, LOW);
         }
         char c = client.read();
- 
+
         // if you've gotten to the end of the line (received a newline
         // character) and the line is blank, the http request has ended,
         // so you can send a reply
@@ -124,11 +124,11 @@ void loop() {
     if (digitalRead(swiatlo_1) == LOW) {
       digitalWrite(swiatlo_1, HIGH);
       digitalWrite(swiatlo_2, HIGH);
-    }
-    if (digitalRead(swiatlo_1) == HIGH) {
+      delay(1000);
+    } else {
       digitalWrite(swiatlo_1, LOW);
       digitalWrite(swiatlo_2, LOW);
+      delay(1000);
     }
-    delay(1000);
   }
 }
