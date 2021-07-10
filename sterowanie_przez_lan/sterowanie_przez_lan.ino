@@ -20,6 +20,7 @@
 #include <SPI.h>
 #include <Ethernet.h>
 
+#define wlacznik 5
 #define swiatlo_1 6
 #define swiatlo_2 7
 
@@ -28,7 +29,7 @@
 byte mac[] = {
   0x90, 0xA2, 0xDA, 0x7A, 0x70, 0x25
 };
-IPAddress ip(192, 168, 100, 232);
+IPAddress ip(192, 168, 100, 230);
 
 // Initialize the Ethernet server library
 // with the IP address and port you want to use
@@ -36,7 +37,7 @@ IPAddress ip(192, 168, 100, 232);
 EthernetServer server(80);
 
 void setup() {
-
+  pinMode(wlacznik, INPUT_PULLUP); //Przycisk jako wejście
   pinMode(swiatlo_1, OUTPUT);
   pinMode(swiatlo_2, OUTPUT);
   digitalWrite(swiatlo_2, LOW);
@@ -118,5 +119,16 @@ void loop() {
     delay(10);
     // close the connection:
     client.stop();
+  }
+  if (digitalRead(wlacznik) == LOW) { //Jeśli przycisk wciśnięty
+    if (digitalRead(swiatlo_1) == LOW) {
+      digitalWrite(swiatlo_1, HIGH);
+      digitalWrite(swiatlo_2, HIGH);
+    }
+    if (digitalRead(swiatlo_1) == HIGH) {
+      digitalWrite(swiatlo_1, LOW);
+      digitalWrite(swiatlo_2, LOW);
+    }
+    delay(1000);
   }
 }
